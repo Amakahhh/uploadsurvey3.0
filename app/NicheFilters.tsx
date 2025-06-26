@@ -35,8 +35,8 @@ export default function NicheFilters() {
 
   return (
     <div className="mt-4">
-      <p>Niche Information:</p>
-      <div className="bg-white border border-[#B3935E] p-6 rounded-xl text-sm mb-4 mt-4">
+      <p className='ml-52'>Niche Information:</p>
+      <div className="bg-white border border-[#B3935E] p-6 rounded-xl text-sm mb-4 mt-4 w-7/12 ml-52">
         <div className="flex items-center gap-2 mb-2">
           <div className="mb-4 w-full">
             <div className="mb-2">

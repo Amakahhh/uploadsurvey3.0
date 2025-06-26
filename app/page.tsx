@@ -56,13 +56,14 @@ export default function SurveyPage() {
 
       {/* Button to switch to form directly */}
       {isLoggedIn && step === 'instructions' && (
-        <div className="w-full flex justify-center mt-4 mb-10">
-          <button
-            className="bg-[#B3935E] text-white py-2 px-6 rounded-md w-[40%]"
-            onClick={() => setStep('surveyInfoForm')} // ⬅️ direct to form
-          >
-            Next
-          </button>
+        <div className="w-full flex  mt-4 mb-10">          
+        <button
+          className="bg-[#B3935E] text-white py-2 px-3 rounded-md w-1/5"
+          
+          onClick={() => setStep('surveyInfoForm')}
+        >        git add .
+          Next
+        </button>
         </div>
       )}
     </div>

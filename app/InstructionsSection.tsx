@@ -39,7 +39,7 @@ export default function InstructionsSection({ setShowVideoAction }: Instructions
   ];
 
   return (
-    <div className="flex-1 bg-white border border-[#B3935E] p-6 rounded-xl text-sm">
+    <div className="flex-1 bg-white border border-[#B3935E] p-6 rounded-xl text-sm ml-36 w-7/12">
       <p className="text-sm mb-4">
         Hey Ayomide! We need you to set up your form first.
         <button

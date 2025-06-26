@@ -70,11 +70,11 @@ const handlePayment = async () => {
     <div>
       <form
         onSubmit={handleSubmit}
-        className="w-full bg-white border border-[#B3935E] p-6 rounded-xl text-sm"
+        className="w-7/12 bg-white border border-[#B3935E] p-6 rounded-xl text-sm ml-52"
       >
         <h2 className="font-bold text-xl mb-4">
           Survey information{' '}
-          <span className="text-xs">(We need all fields!)</span>
+         
         </h2>
 
         {/* Title of Survey */}
