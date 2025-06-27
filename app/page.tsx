@@ -19,7 +19,7 @@ export default function SurveyPage() {
         <div className="flex items-center gap-2 ml-auto"></div>
       </div>
 
-      {/* Login */}
+      {/* Login & Modals */}
       {!isLoggedIn && <LoginOverlay setIsLoggedInAction={setIsLoggedIn} />}
       {showVideo && <VideoModal setShowVideoAction={setShowVideo} />}
 
@@ -37,11 +37,36 @@ export default function SurveyPage() {
       </div>
 
       {/* Page Content Switch */}
+      {/* This container centers the content and handles the desktop/mobile layout switch */}
       <div className="flex flex-col lg:flex-row max-w-6xl mx-auto w-full px-4 py-6 gap-6">
         {step === 'instructions' && (
           <>
-            <InstructionsSection setShowVideoAction={setShowVideo} />
-            <div className="lg:w-1/3 w-full bg-[#FFFCF5] p-4 rounded text-sm">
+            {/* --- MODIFICATION START: Wrapped Instructions and Button in a single column container --- */}
+            {/* This div acts as the main content column. lg:flex-1 makes it take the remaining space on desktop. */}
+            <div className="flex flex-col w-full lg:flex-1">
+              <InstructionsSection setShowVideoAction={setShowVideo} />
+
+              {/* The "Next" button is now inside this column */}
+              {isLoggedIn && (
+                // Added mt-6 for spacing between instructions and the button
+                <div className="mt-6">
+                  <button
+                    // w-full: Full width on mobile (respecting parent padding)
+                    // md:w-[515px]: Fixed width on medium screens and up
+                    // block mx-auto: Centers the button within this column
+                    className="bg-[#B3935E] text-white py-2 px-3 border border-[#B3935E] rounded-[9px] w-full md:w-[515px] block mx-auto"
+                    onClick={() => setStep('surveyInfoForm')}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </div>
+            {/* --- MODIFICATION END --- */}
+
+            {/* Note Sidebar */}
+            {/* Added lg:self-start to prevent the sidebar from stretching to the full height of the main column on desktop */}
+            <div className="lg:w-1/3 w-full bg-[#FFFCF5] p-4 rounded text-sm lg:self-start">
               <h3 className="font-bold text-lg mb-2">Note!</h3>
               <p>
                 If we notice that any of these settings have been tampered with after upload,
@@ -54,18 +79,7 @@ export default function SurveyPage() {
         {step === 'surveyInfoForm' && <SurveyInfoForm />}
       </div>
 
-      {/* Button to switch to form directly */}
-      {isLoggedIn && step === 'instructions' && (
-        <div className="w-full flex  mt-4 mb-10">          
-        <button
-          className="bg-[#B3935E] text-white py-2 px-3 rounded-md w-1/5"
-          
-          onClick={() => setStep('surveyInfoForm')}
-        >        git add .
-          Next
-        </button>
-        </div>
-      )}
+      {/* --- The previous standalone button container has been removed and integrated above --- */}
     </div>
   );
 }
