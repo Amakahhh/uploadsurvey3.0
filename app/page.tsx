@@ -76,7 +76,9 @@ export default function SurveyPage() {
           </>
         )}
 
-        {step === 'surveyInfoForm' && <SurveyInfoForm />}
+        {step === 'surveyInfoForm' && (
+          <SurveyInfoForm setStep={setStep} />
+        )}
       </div>
 
       {/* --- The previous standalone button container has been removed and integrated above --- */}

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import NicheFilters from './NicheFilters';
 
-export default function SurveyInfoForm() {
+export default function SurveyInfoForm({ setStep }: { setStep: (step: string) => void }) {
   const [formData, setFormData] = useState({
     title: '',
     desc: '',
@@ -32,31 +32,32 @@ export default function SurveyInfoForm() {
     setShowInvoice(true);
   };
 
-const handlePayment = async () => {
-  try {
-    const response = await fetch('/api/kora/checkout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        amount: totalCost,
-        email: 'test@example.com', // you can add a real email field later
-        name: formData.title || 'Survey User'
-      }),
-    });
+  const handlePayment = async () => {
+    // ... handlePayment logic remains the same ...
+    try {
+      const response = await fetch('/api/kora/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: totalCost,
+          email: 'test@example.com', // you can add a real email field later
+          name: formData.title || 'Survey User'
+        }),
+      });
 
-    const data = await response.json();
-    if (data.checkout_url) {
-      window.location.href = data.checkout_url; // redirect user to KoraPay
-    } else {
-      alert('Unable to create payment link');
+      const data = await response.json();
+      if (data.checkout_url) {
+        window.location.href = data.checkout_url; // redirect user to KoraPay
+      } else {
+        alert('Unable to create payment link');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Something went wrong');
     }
-  } catch (err) {
-    console.error(err);
-    alert('Something went wrong');
-  }
-};
+  };
 
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -67,14 +68,33 @@ const handlePayment = async () => {
   };
 
   return (
-    <div>
+    <div className="w-full px-4">
+      {/* Back Button */}
+      <button
+        type="button"
+        onClick={() => setStep('instructions')}
+        className="flex items-center text-[#B3935E] font-medium mb-4 hover:underline focus:outline-none"
+      >
+        <svg
+          className="w-5 h-5 mr-1"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back
+      </button>
+
       <form
         onSubmit={handleSubmit}
-        className="w-7/12 bg-white border border-[#B3935E] p-6 rounded-xl text-sm ml-52"
+        // Changed: removed w-7/12 and ml-52. 
+        // Added w-full, max-w-3xl (to match NicheFilters), and mx-auto (for centering).
+        className="bg-white border border-[#B3935E] p-6 rounded-xl text-sm w-full max-w-3xl mx-auto"
       >
         <h2 className="font-bold text-xl mb-4">
           Survey information{' '}
-         
         </h2>
 
         {/* Title of Survey */}
@@ -86,7 +106,7 @@ const handlePayment = async () => {
             <input
               id="title"
               type="text"
-              maxLength={200}
+              maxLength={100}
               value={formData.title}
               onChange={handleInputChange}
               className="w-full border p-2 pr-16 rounded-[5px]"
@@ -98,18 +118,27 @@ const handlePayment = async () => {
         </div>
 
         {/* Brief Description */}
-        <div className="mb-2">
-          <label className="block mb-1 text-[#2E2F32]" htmlFor="desc">
-            Brief description:
-          </label>
-          <textarea
-            id="desc"
-            value={formData.desc}
-            onChange={handleInputChange}
-            className="w-full border p-2 rounded-[5px]"
-            maxLength={300}
-          />
-        </div>
+        {/* Brief Description */}
+<div className="mb-2">
+  <label className="block mb-1 text-[#2E2F32]" htmlFor="desc">
+    Brief description:
+  </label>
+  {/* Add a relative wrapper around the textarea */}
+  <div className="relative"> 
+    <textarea
+      id="desc"
+      value={formData.desc}
+      onChange={handleInputChange}
+      // Add `pr-16` for right padding (matches title input)
+      className="w-full border p-2 pr-16 rounded-[5px]"
+      maxLength={300}
+    />
+    {/* Absolute counter inside the relative wrapper */}
+    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#2E2F32]">
+      {formData.desc.length}/300 {/* Use `desc` length (not `title` length) */}
+    </span>
+  </div>
+</div>
 
         {/* Responder Link */}
         <div className="mb-2">
@@ -180,9 +209,10 @@ const handlePayment = async () => {
         </div>
       </form>
 
+      {/* NicheFilters is already responsive and centered from your previous request */}
       <NicheFilters />
 
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center mb-8">
         <button
           type="submit"
           onClick={handleSubmit}
@@ -197,9 +227,9 @@ const handlePayment = async () => {
         <div
           id="overlay-backdrop"
           onClick={handleBackdropClick}
-          className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center"
+          className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center px-4"
         >
-          <div className="bg-white  border-[#B3935E] border-l p-6 rounded-lg shadow-lg w-80 text-center">
+          <div className="bg-white  border-[#B3935E] border-l p-6 rounded-lg shadow-lg w-full max-w-sm text-center">
             <h2 className="font-bold text-xl mb-2">Invoice</h2>
             <p className="text-sm mb-2">
               Please verify all the information you provided before proceeding to pay as
@@ -239,9 +269,9 @@ const handlePayment = async () => {
         <div
           id="overlay-backdrop"
           onClick={handleBackdropClick}
-          className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center"
+          className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center px-4"
         >
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center flex flex-col justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md text-center flex flex-col justify-center items-center">
             <h2 className="font-bold text-xl mb-2">Survey uploaded!</h2>
             <p className="text-sm mb-4">
               Your survey has been uploaded to SurveyHustler successfully! Thanks for choosing us as the launchpad for your survey ❤️❤️❤️
