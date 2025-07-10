@@ -106,6 +106,7 @@ export default function InstructionsSection({ setShowVideoAction }: Instructions
             required
           />
         </div>
+        
       </div>
     </div>
   );
