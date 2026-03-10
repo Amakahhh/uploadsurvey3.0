@@ -1,0 +1,30 @@
+{
+  "users": {
+    "test@stu.cu.edu.ng": {
+      "id": "77c06706-a94f-4c39-8bc1-2bb5f6200ca3",
+      "email": "test@stu.cu.edu.ng",
+      "password": "$2a$10$Aj.I3fb1PuHbAXMeGmFKzOqSKqVbGZpy5DAXXpmzgJ5d4T0ve07cm",
+      "firstName": "Test",
+      "lastName": "User",
+      "roles": [
+        "respondent"
+      ],
+      "isVerified": true,
+      "createdAt": "2026-03-06T12:51:15.370Z"
+    }
+  },
+  "surveys": {},
+  "wallets": {
+    "77c06706-a94f-4c39-8bc1-2bb5f6200ca3": {
+      "id": "f07c0f26-4f51-498a-8300-d23750ebb4b3",
+      "user_id": "77c06706-a94f-4c39-8bc1-2bb5f6200ca3",
+      "balance": 0,
+      "total_earned": 0,
+      "total_withdrawn": 0
+    }
+  },
+  "ledger": [],
+  "survey_responses": {},
+  "survey_sessions": {},
+  "korapay_transactions": {}
+}

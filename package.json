@@ -9,12 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.17.0",
+    "@supabase/ssr": "^0.9.0",
+    "@supabase/supabase-js": "^2.39.8",
+    "bcryptjs": "^2.4.3",
+    "country-telephone-data": "^0.6.3",
+    "crypto-js": "^4.2.0",
+    "flag-icons": "^7.5.0",
+    "framer-motion": "^12.35.0",
+    "googleapis": "^137.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "libphonenumber-js": "^1.12.38",
     "next": "15.1.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-select": "^5.10.1",
-    "tailwindcss-scrollbar": "^0.1.0"
+    "tailwindcss-scrollbar": "^0.1.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

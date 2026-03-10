@@ -2,13 +2,52 @@
 import React from 'react';
 import Image from 'next/image';
 import logoOnly from '@/public/surveylogo.svg';
+import { useAuth } from './contexts/AuthContext';
 
 const Navbar = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+
+  // Generate user initials from first and last name
+  const getUserInitials = () => {
+    if (!user) return 'U';
+    const firstInitial = user.firstName ? user.firstName.charAt(0).toUpperCase() : '';
+    const lastInitial = user.lastName ? user.lastName.charAt(0).toUpperCase() : '';
+    return firstInitial + lastInitial || 'U';
+  };
+
+  // Get display name
+  const getDisplayName = () => {
+    if (!user) return 'Guest';
+    return `${user.firstName} ${user.lastName}`.trim() || user.email;
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <div className="absolute top-0 left-0 w-full h-12 bg-[#2E2F32] z-0">
       <div className="absolute top-3 right-4 z-10 flex items-center space-x-2">
-        <p className="text-sm font-semibold text-white">Aboderin Ayomide</p>
-        <div className="w-6 h-6 rounded-full bg-white text-[#2E2F32] flex items-center justify-center text-sm">A</div>
+        {isAuthenticated && user ? (
+          <>
+            <p className="text-sm font-semibold text-white">{getDisplayName()}</p>
+            <button 
+              onClick={handleLogout}
+              className="w-6 h-6 rounded-full bg-white text-[#2E2F32] flex items-center justify-center text-sm font-semibold hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
+              title="Click to logout"
+            >
+              {getUserInitials()}
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="text-sm font-semibold text-white">Guest</p>
+            <div className="w-6 h-6 rounded-full bg-white text-[#2E2F32] flex items-center justify-center text-sm font-semibold">
+              G
+            </div>
+          </>
+        )}
       </div>
 
       {/* Logo at top center for mobile */}

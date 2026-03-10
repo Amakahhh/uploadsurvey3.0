@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Signup</title>
+    <style>
+        body { font-family: monospace; max-width: 600px; margin: 20px auto; }
+        input { display: block; width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #dc3545; color: white; border: none; cursor: pointer; font-size: 16px; }
+        #response { margin-top: 20px; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; }
+        pre { background: #282c34; color: #abb2bf; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Debug Signup (No Profile Update)</h1>
+    <p><strong>This tests ONLY user creation in Supabase Auth</strong></p>
+    
+    <input type="email" id="email" placeholder="Email" value="testuser5@example.com">
+    <input type="password" id="password" placeholder="Password" value="TestPass123!">
+    
+    <button onclick="testSignup()">Test Auth Creation</button>
+    
+    <div id="response"></div>
+
+    <script>
+        async function testSignup() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            document.getElementById('response').innerHTML = '<pre>Sending request...</pre>';
+
+            try {
+                const response = await fetch('/api/debug/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                const responseDiv = document.getElementById('response');
+                
+                responseDiv.innerHTML = `
+                    <h3>${response.ok ? '✅ SUCCESS' : '❌ FAILED'}</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                    ${response.ok ? `<p><strong>Now check Supabase:</strong> Authentication → Users → Look for ${email}</p>` : ''}
+                `;
+                
+                responseDiv.style.background = response.ok ? '#d4edda' : '#f8d7da';
+            } catch (error) {
+                document.getElementById('response').innerHTML = `
+                    <h3>❌ ERROR</h3>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+
+        // Log to console for debugging
+        console.log('Debug signup form loaded');
+    </script>
+</body>
+</html>
